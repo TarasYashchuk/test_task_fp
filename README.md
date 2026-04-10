@@ -1,6 +1,16 @@
 # Document Processing Pipeline
 
-## Getting Started
+## Live Demo
+
+The app is deployed and ready to test — no setup needed:
+
+**Swagger UI (interactive docs):** [testtaskfp-production.up.railway.app/api](https://testtaskfp-production.up.railway.app/api)
+
+Open the link, pick a test scenario from the dropdown examples, and hit "Try it out" → "Execute". There are 10 pre-built examples covering valid events, duplicates, messy data, out-of-order events, partial merges, and validation failures.
+
+Alternatively, import `postman-collection.json` from this repo into Postman (update `baseUrl` to the Railway URL).
+
+## Getting Started (local)
 
 ```bash
 # 1. Install dependencies
