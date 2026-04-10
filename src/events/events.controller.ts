@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpCode } from '@nestjs/common';
+import { Controller, Post, Delete, Body, HttpCode } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
@@ -17,5 +17,12 @@ export class EventsController {
   @ApiBody({ type: CreateEventDto, examples: EVENT_EXAMPLES })
   async create(@Body() dto: CreateEventDto) {
     return this.eventsService.ingest(dto);
+  }
+
+  @Delete('reset')
+  @ApiOperation({ summary: 'Reset database (delete all events and documents)' })
+  @ApiResponse({ status: 200, description: 'All data deleted' })
+  async reset() {
+    return this.eventsService.resetAll();
   }
 }

@@ -99,6 +99,19 @@ export class EventsService {
     };
   }
 
+  async resetAll(): Promise<{ deleted: { events: number; documents: number } }> {
+    const [events, documents] = await Promise.all([
+      this.eventModel.deleteMany({}),
+      this.documentModel.deleteMany({}),
+    ]);
+    return {
+      deleted: {
+        events: events.deletedCount,
+        documents: documents.deletedCount,
+      },
+    };
+  }
+
   private isDuplicateKeyError(err: unknown): boolean {
     return (
       typeof err === 'object' &&
