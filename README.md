@@ -93,3 +93,6 @@ I can suggest this:
 
 Brief schema
 
+<img width="3210" height="4582" alt="Stateless API Layer Load-2026-04-10-143214" src="https://github.com/user-attachments/assets/99108b6b-3199-4223-8b4a-3f3b4067d135" />
+
+
