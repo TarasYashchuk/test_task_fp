@@ -1,0 +1,19 @@
+services:
+  mongodb:
+    image: mongo:7
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+
+  app:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/document-pipeline
+    depends_on:
+      - mongodb
+
+volumes:
+  mongo-data:
