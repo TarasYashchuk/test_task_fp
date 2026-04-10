@@ -85,9 +85,9 @@ I can suggest this:
 
 2. While I haven't worked extensively with MongoDB in production before, my research into its scaling best practices showed that doing a round-trip updateOne for every single event isn't optimal at high loads. To fix this, I'd have the workers batch the events and use MongoDB's bulkWrite(). Grouping operations into a single network request is the standard way to avoid hammering the database.
 
-3. Shard MongoDB by Document ID To handle the heavy write load, I'd shard the events collection using a hashed documentId. This ensures the writes are distributed evenly across multiple shards without creating hot spots. The documents collection would benefit from the exact same sharding strategy.
+3. Shard MongoDB. I'd shard the events collection using a hashed documentId. This ensures the writes are distributed evenly across multiple shards without creating hot spots. The documents collection would benefit from the exact same sharding strategy.
 
-4. Cache the heavy aggregations The GET /reports/summary endpoint currently runs a $facet aggregation over the entire collection. With millions of records, that will eventually get too expensive. Since an Ops dashboard usually doesn't need to be accurate down to the millisecond, I'd just cache the aggregation results in Redis with a short TTL, like 30 sec.
+4. The GET /reports/summary endpoint currently runs a $facet aggregation over the entire collection. With millions of records, that will eventually get too expensive. Since an Ops dashboard usually doesn't need to be accurate down to the millisecond, I'd just cache the aggregation results in Redis with a short TTL, like 30 sec.
 
 5. I'd spin up multiple instances of this app behind a load balancer. Since the service is completely stateless (all state lives in Mongo), and the current codebase already handles idempotency and race conditions during upserts, we can scale out horizontally without worrying about data corruption.
 
